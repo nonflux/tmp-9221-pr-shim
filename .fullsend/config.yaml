@@ -1,0 +1,12 @@
+version: "1"
+agents:
+  - name: review
+    enabled: false
+  - name: retro
+    enabled: false
+  - name: triage
+    enabled: false
+  - name: code
+    enabled: false
+  - name: fix
+    enabled: false
