@@ -1,0 +1,8 @@
+name: probe-caller
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions: {}
+jobs:
+  call:
+    uses: ./.github/workflows/probe-local-reusable.yml
