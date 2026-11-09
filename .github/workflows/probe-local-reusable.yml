@@ -1,0 +1,19 @@
+name: probe-local-reusable
+on:
+  workflow_call:
+permissions: {}
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Print workflow sha
+        env:
+          WF_SHA: ${{ job.workflow_sha }}
+          WF_REPO: ${{ job.workflow_repository }}
+          EV_SHA: ${{ github.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          echo "probe workflow_repository=${WF_REPO}"
+          echo "probe workflow_sha=${WF_SHA}"
+          echo "probe github.sha=${EV_SHA} base=${BASE_SHA} head=${HEAD_SHA}"

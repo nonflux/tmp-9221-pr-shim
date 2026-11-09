@@ -5,11 +5,13 @@
 #
 # Security: pull request events use pull_request, not pull_request_target
 # (GitHub blocks pull_request_target by default in public repositories from
-# 2026-12-02; ADR 0164). The dispatch job runs only for same-repo PRs, whose
-# authors already have write access. Fork PRs get no secrets on pull_request,
-# so they are skipped here and in reusable-dispatch.yml; a maintainer comments
-# /fs-review to review one. reusable-dispatch.yml checks out the base branch
-# SHA for pull request events and never runs PR code with credentials.
+# 2026-12-02; ADR 0164). On pull_request this workflow runs from the PR's own
+# copy and forwards the repository secrets, so the dispatch job runs only for
+# same-repo PRs, whose authors already have write access. Fork PRs are skipped
+# here and again in reusable-dispatch.yml, which a fork cannot edit; a
+# maintainer comments /fs-review to review one. Keep "send secrets to
+# workflows from fork pull requests" off in private repositories.
+# reusable-dispatch.yml checks out the base side for pull request events.
 #
 # Routing: this shim forwards the raw event context to reusable-dispatch.yml,
 # which determines the stage and runs the agent inline (ADR 62).
@@ -45,7 +47,7 @@ jobs:
       issues: write
       packages: read
       pull-requests: write
-    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@50dedcf9f40c9eea2b0058c8abb4d13af13735f1
+    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@dbeee1ff99ba5c454ebf2ae784eec81be2cfbaa2
     with:
       event_action: ${{ github.event.action }}
       mint_url: ${{ vars.FULLSEND_MINT_URL }}
