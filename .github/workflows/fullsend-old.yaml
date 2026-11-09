@@ -42,7 +42,7 @@ jobs:
       issues: write
       packages: read
       pull-requests: write
-    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@dbeee1ff99ba5c454ebf2ae784eec81be2cfbaa2
+    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@4d9d683315ff7f0aa67f62a99d6456ebba6d2eee
     with:
       event_action: ${{ github.event.action }}
       mint_url: ${{ vars.FULLSEND_MINT_URL }}
